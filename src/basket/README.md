@@ -2,11 +2,10 @@
 
 # Basket
 
-> **Basket** is a high-performance state container (store) for JavaScript/TypeScript, allowing you to manage state as simply and flexibly as assigning variables.<br>
+**Basket** is a high-performance state container (store) for JavaScript/TypeScript, allowing you to manage state as simply and flexibly as assigning variables.<br>
 Framework-agnostic: works seamlessly with React, Vue, Svelte, and more.<br>
 *Supports concise and powerful property handling, lifecycle hooks, timing hooks, RxJS observable integration, logging, and easy bulk import/export—all without store history bloat.*
 
-<br>
 
 ## ✨ Key Features
 

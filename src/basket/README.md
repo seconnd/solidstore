@@ -1,5 +1,3 @@
----
-
 # Basket
 
 **Basket** is a high-performance state container (store) for JavaScript/TypeScript, allowing you to manage state as simply and flexibly as assigning variables.<br>

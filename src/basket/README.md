@@ -159,8 +159,8 @@ r$.test_exec = 'C'     // triggers both beforeSet and afterSet (setter)
 - `r$.export_array`  : Export as array of [key, value] pairs  
 - `r$.export_map`    : Export as a Map object  
 - `r$.export_json`   : Export as a JSON string  
-- `r$.import_object = {...}` : Bulk import from an object  
-- `r$.import_json = '{...}'` : Bulk import from a JSON string
+- `r$.import_object = {...}` : Reset and bulk import from an object  
+- `r$.import_json = '{...}'` : Reset and bulk import from a JSON string
 
 ---
 
@@ -176,7 +176,8 @@ r$.x_config = {
   value: 5,
   beforeSet: new bob$().pipe(filter(val => val > 3)).subscribe({ next: (v) => console.log('Over 3:', v) })
 }
-r$.x_before = 10;  // Outputs: 'Over 3: 10'
+r$.x_before = 10;  // Outputs: 'Over 3: 5'
+console.log(r$.x);  // Outputs: 10
 ```
 
 ---

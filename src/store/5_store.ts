@@ -49,7 +49,6 @@ export class Store extends Record {
 
         store.subscribe(() => {
 
-            console.log(store.dispatched)
             let dispatched = store.dispatched.shift()
 
             store.current = store.getState()

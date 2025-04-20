@@ -44,7 +44,7 @@ export class Basket extends AbstractBasket {
 				const commands = prop.split('_')
 				prop = commands.shift() as string
 
-				let isLogging = false, isDelete = false, isBefore = false, isExecAll = false
+				let isLogging = false, isConfig = false, isDelete = false, isBefore = false, isExecAll = false
 
 				if (!target.hasOwnProperty(prop)) {
 					console.warn(`(BASKET) Cannot access. [ ${prop} ] is no exists.`)
@@ -56,6 +56,9 @@ export class Basket extends AbstractBasket {
 					switch (command) {
 						case 'log':
 							isLogging = true
+							break
+						case 'config':
+							isConfig = true
 							break
 						case 'delete':
 							isDelete = true
@@ -74,7 +77,7 @@ export class Basket extends AbstractBasket {
 
 				if (isDelete) {
 
-					if (this.configs$.get(prop)['beforeDelete'])
+					if (this.configs$.get(prop)?.beforeDelete)
 						this.configs$.get(prop).beforeDelete.next!(target[prop])
 
 					delete target[prop]
@@ -82,7 +85,7 @@ export class Basket extends AbstractBasket {
 
 					if (isLogging) console.log(`%c(BASKET) [ ${prop} ] is deleted.`, deleteStyle)
 
-					if (this.configs$.get(prop)['afterDelete'])
+					if (this.configs$.get(prop)?.afterDelete)
 						this.configs$.get(prop).afterDelete.next!(null)
 
 					return true
@@ -95,7 +98,14 @@ export class Basket extends AbstractBasket {
 					console.groupEnd()
 				}
 
-				if (this.configs$.get(prop)['beforeGet'] && (isBefore || isExecAll))
+				if (isConfig) {
+					if (this.configs$.has(prop))
+						return this.configs$.get(prop)
+
+					return null
+				}
+
+				if (this.configs$.get(prop)?.beforeGet && (isBefore || isExecAll))
 					this.configs$.get(prop).beforeGet.next!(target[prop])
 
 				return target[prop]
@@ -193,11 +203,11 @@ export class Basket extends AbstractBasket {
 
 					}
 
-					if (config['beforeCreate']) config.beforeCreate.next!(value)
+					if (config?.beforeCreate) config.beforeCreate.next!(value)
 
 					target[prop] = value
 
-					if (config['afterCreate']) config.afterCreate.next!(value)
+					if (config?.afterCreate) config.afterCreate.next!(value)
 
 					if (isLogging) {
 						console.groupCollapsed(`%c(BASKET) [ ${prop} ] = ${this.logger(value)}(${this.typeCheck(value)}) is created.`, createStyle)
@@ -215,7 +225,7 @@ export class Basket extends AbstractBasket {
 					return true
 				}
 
-				if (this.configs$.get(prop)['beforeSet'] && (isBefore || isExecAll))
+				if (this.configs$.get(prop)?.beforeSet && (isBefore || isExecAll))
 					this.configs$.get(prop).beforeSet.next!(target[prop])
 
 				target[prop] = value
@@ -227,7 +237,7 @@ export class Basket extends AbstractBasket {
 					console.groupEnd()
 				}
 
-				if (this.configs$.get(prop)['afterSet'] && (isAfter || isExecAll))
+				if (this.configs$.get(prop)?.afterSet && (isAfter || isExecAll))
 					this.configs$.get(prop).afterSet.next!(value)
 
 				return true

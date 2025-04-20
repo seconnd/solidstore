@@ -1,7 +1,7 @@
 import { legacy_createStore as createStore, combineReducers, applyMiddleware, Middleware, compose, Reducer } from 'redux'
 import undoable, { includeAction } from 'redux-undo'
 
-import { Queue } from '../queue'
+// import { SkipListQueue } from '../queue'
 import { Parameter, CustomAction, isSilent, Payload } from './0_types'
 import { Record } from './4_record'
 
@@ -37,7 +37,7 @@ export class Store extends Record {
             composeEnhancers(applyMiddleware((this.setMiddleware() as Middleware)))
         )
 
-        this.store.dispatched = new Queue()
+        this.store.dispatched = []
         this.store.current = this.store.getState()
         this.store.currentRecord = {}
         this.store.parameters = this.parameters
@@ -49,7 +49,8 @@ export class Store extends Record {
 
         store.subscribe(() => {
 
-            let dispatched = store.dispatched.shift().value
+            console.log(store.dispatched)
+            let dispatched = store.dispatched.shift()
 
             store.current = store.getState()
             if (store.getStateR) store.currentRecord = store.getStateR()
@@ -100,6 +101,8 @@ export class Store extends Record {
                     case 'initial$':
 
                         let parameter = this.parameters.get(redid.value.name)
+
+                        parameter!.inputState!.value = redid.value.value
 
                         if (parameter)
                             this.setValueState(parameter, 'redo')

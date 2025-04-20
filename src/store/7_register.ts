@@ -258,6 +258,7 @@ export class Wrapper extends Reducer {
             method: function (type, target, value = null) {
 
                 const object: StandardObject = {}
+                let origin: any
 
                 switch (type) {
 
@@ -279,27 +280,47 @@ export class Wrapper extends Reducer {
 
                     case 'export_object':
 
-                        for (let element of Object.entries(target))
-                            object[element[0]] = element[1]
+                        origin = store.getState()
+
+                        for (let element in origin) {
+                            if (element !== 'initial$' && element !== 'history$')
+                                object[element] = origin[element]
+                        }
 
                         return object
 
                     case 'export_array':
-                        return Object.entries(target)
+
+                        origin = store.getState()
+
+                        for (let element in origin) {
+                            if (element !== 'initial$' && element !== 'history$')
+                                object[element] = origin[element]
+                        }
+
+                        return Object.entries(object)
 
                     case 'export_map':
 
                         const map = new Map()
 
-                        for (let element of Object.entries(target))
-                            map.set(element[0], element[1])
+                        origin = store.getState()
+
+                        for (let element in origin) {
+                            if (element !== 'initial$' && element !== 'history$')
+                                map.set(element, origin[element])
+                        }
 
                         return map
 
                     case 'export_json':
 
-                        for (let element of Object.entries(target))
-                            object[element[0]] = element[1]
+                        origin = store.getState()
+
+                        for (let element in origin) {
+                            if (element !== 'initial$' && element !== 'history$')
+                                object[element] = origin[element]
+                        }
 
                         return JSON.stringify(object)
 

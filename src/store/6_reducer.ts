@@ -27,8 +27,10 @@ export class Reducer extends Store {
 
         if (this.reducers[name]) return
 
-        parameter.initialState = { value: parameter.value, timestamp: Date.now() }
-        parameter.inputState = parameter.initialState
+        if (!isSilent) {
+            parameter.initialState = { value: parameter.value, timestamp: Date.now() }
+            parameter.inputState = parameter.initialState
+        }
 
         // record state
         this.createRecordState(parameter)
@@ -122,7 +124,7 @@ export class Reducer extends Store {
 
             if (!actionMethod) return state
 
-            if (this.store.dispatched.tail?.value.action.type === undefined) return state
+            if (this.store.dispatched.length === 0) return state
 
             if (action.type.includes('_update') || action.type.includes('_undo') || action.type.includes('_redo')) {
 

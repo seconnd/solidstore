@@ -6,6 +6,7 @@
 Framework-agnostic: works seamlessly with React, Vue, Svelte, and more.<br>
 *Supports concise and powerful property handling, lifecycle hooks, timing hooks, RxJS observable integration, logging, and easy bulk import/export—all without store history bloat.*
 
+<br>
 
 ## ✨ Key Features
 

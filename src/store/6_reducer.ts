@@ -130,17 +130,20 @@ export class Reducer extends Store {
 
                 return actionMethod(state, action) || state
 
-            } else if (action.type === this.store.dispatched.tail?.value.action.type) {
+            } else if (action.type === this.store.dispatched[this.store.dispatched.length - 1].action.type) {
 
                 if (!action.value) action.value = state.value
 
                 let payload: Payload = {}
                 if (action?.dispatched?.name) payload.target = action.dispatched.name
                 if (action?.type) payload.trigger = action.type
-                if (action?.dispatched?.state?.value) payload.previous = action.dispatched.state.value
-                if (action?.value) payload.next = action.value
+                if (action?.dispatched?.state?.hasOwnProperty('value'))
+                    payload.previous = action.dispatched.state.value
+                if (action?.hasOwnProperty('value')) payload.next = action.value
 
                 let value = actionMethod(payload) || state
+
+                action.value = value
 
                 return { value, timestamp: Date.now() }
             }

@@ -5,7 +5,45 @@ import { filter, map } from 'rxjs'
 // const { s$ } = require('./dist/index.es.js')
 // const { s$, stateObservable } = require('./dist/index.es.js');
 
-import { b$, bob$, s$ } from '../src/index'
+import { b$, bob$, s$, sob$ } from '../src/index'
+
+s$.cash_config = {
+    value: 1000,
+    actions: [
+      { name: 'deposit',  method: v => v.previous + v.next },   // 예: s$.cash_deposit = 500
+      { name: 'withdraw', method: v => v.previous - v.next }    // 예: s$.cash_withdraw = 200
+    ],
+    before: payload => {
+        console.log('변경 전:', payload)
+        return payload.next
+    },
+    after:  new sob$().pipe(filter(val => val.next > 3)).subscribe({ next: (v) => console.log('Over 1000:', v.next) }),
+    undo:   payload => console.log('undo 직후:', payload),
+    redo:   payload => console.log('redo 직후:', payload)
+  }
+  
+  // 사용 예시
+  s$.cash_deposit = 500
+  console.log(s$.cash)   // cash=1500
+  s$.undo
+  console.log(s$.cash)   // cash=1000
+  s$.redo
+  console.log(s$.cash)   // cash=1500
+  s$.cash_withdraw = 200
+  console.log(s$.cash)   // cash=1300
+
+
+
+
+
+
+
+
+
+
+
+
+
 // console.log(Matrixphere.s$)
 // console.log(Matrixphere.b$)
 // s$ = Matrixphere.s$
@@ -20,6 +58,7 @@ import { b$, bob$, s$ } from '../src/index'
 //             map(x => x)
 //         ).subscribe({
 //             next: (data) => {
+
 //                 console.log(data)
 //                 console.log('bob$ next')
 //             }
@@ -162,54 +201,58 @@ import { b$, bob$, s$ } from '../src/index'
 
 // import { b$ } from 'solidstore';
 
-// Create a register instance
-const r$ = b$.getNewRegister();
+// // Create a register instance
+// const r$ = b$.getNewRegister();
 
-// Assign/read/update/delete state as simple variables
-r$.foo = 123;
-console.log(r$.foo);       // 123
-r$.foo = 456;              // Updates state
-r$.foo_log = 789;          // Triggers console logging
+// // Assign/read/update/delete state as simple variables
+// r$.foo = 123;
+// console.log(r$.foo);       // 123
+// r$.foo = 456;              // Updates state
+// r$.foo_log = 789;          // Triggers console logging
 
-// Attach config (timing hooks/extensions)
-r$.bar_config = {
-    value: 'bar',
-    beforeGet: (val)   => console.log('Before get:', val),
-    beforeSet: (prev)  => console.log('Previous value:', prev),
-    afterSet:  (now)   => console.log('New value:', now),
-};
-r$.bar = 'NewValue';       // Hooks fire automatically
-r$.bar;                    // beforeGet hook runs
+// // Attach config (timing hooks/extensions)
+// r$.bar_config = {
+//     value: 'bar',
+//     beforeGet: (val)   => console.log('Before get:', val),
+//     beforeSet: (prev)  => console.log('Previous value:', prev),
+//     afterSet:  (now)   => console.log('New value:', now),
+// };
+// r$.bar = 'NewValue';       // Hooks fire automatically
+// r$.bar;                    // beforeGet hook runs
 
-// Bulk import/export
-// r$.import_object = { a: 1, b: 2 };
-// const all = r$.export_object;     // { a: 1, b: 2, ... }
-// const json = r$.export_json;      // '{"a":1,"b":2,...}'
+// // Bulk import/export
+// // r$.import_object = { a: 1, b: 2 };
+// // const all = r$.export_object;     // { a: 1, b: 2, ... }
+// // const json = r$.export_json;      // '{"a":1,"b":2,...}'
 
-// Delete
-console.log('test')
-r$.foo_delete;
+// // Delete
+// console.log('test')
+// r$.foo_delete;
 
-console.log(r$)
+// console.log(r$)
 
-// Observable support!
-// import { bob$ } from 'solidstore'; // bob$ = 'b'asket 'ob'servable
-// import { filter } from 'rxjs';
+// // Observable support!
+// // import { bob$ } from 'solidstore'; // bob$ = 'b'asket 'ob'servable
+// // import { filter } from 'rxjs';
 
-r$.obs_config = {
-  value: 'trigger', 
-  beforeGet: new bob$()
-    .pipe(
-      filter(val => val === 'trigger')
-    ).subscribe({ next: () => console.log('Read!') })
-};
+// r$.obs_config = {
+//   value: 'trigger', 
+//   beforeGet: new bob$()
+//     .pipe(
+//       filter(val => val === 'trigger')
+//     ).subscribe({ next: () => console.log('Read!') })
+// };
 
-r$.obs_exec;
+// r$.obs_exec;
 
 
-r$.x_config = {
-  value: 5,
-  beforeSet: new bob$().pipe(filter(val => val > 3)).subscribe({ next: (v) => console.log('Over 3:', v) })
-}
-r$.x_before = 10;  // Outputs: 'Over 3: 5'
-console.log(r$.x)  // Outputs: 10
+// r$.x_config = {
+//   value: 5,
+//   test: 'test1',
+//   beforeSet: new bob$().pipe(filter(val => val > 3)).subscribe({ next: (v) => console.log('Over 3:', v) }),
+//   afterSet: new bob$().pipe(filter(val => val > 3)).subscribe({ next: (v) => console.log('Over 3:', v) })
+// }
+// r$.x_after = 8;  // Outputs: 'Over 3: 8'
+// r$.x_before = 10;  // Outputs: 'Over 3: 8'
+// console.log(r$.x);  // Outputs: 10
+// console.log(r$.x_config)

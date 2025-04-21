@@ -14,7 +14,7 @@ export class Basket extends AbstractBasket {
 	// 	this.getNewRegister(this)
 	// }
 
-    static getNewRegister = (register: Register = class Register {}) => {
+    static getNewRegister = (register: Register = {}) => {
 
 		const handler: ProxyHandler<Register> = {
 
@@ -354,7 +354,12 @@ export class Basket extends AbstractBasket {
 				if (typeof method !== 'function') return method
 		
 				return new BasketObservable().subscribe(method)
-			}
+			},
+
+            deleteProperty: function (target, prop) {
+              console.warn(`Cannot delete [ ${prop} ]. Please use delete command. -> S$.${prop}_delete`);
+              return true
+            }
 
 		}
 

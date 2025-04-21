@@ -65,6 +65,7 @@ export class Store extends Record {
             if (actionType === 'history$_undo') {
 
                 let undid = store.current.history$.future[0].value
+                let states
 
                 switch (undid.name) {
 
@@ -72,6 +73,14 @@ export class Store extends Record {
 
                         if (store.remove)
                             store.remove(undid.value.name, 'undo')
+
+                        states = store.getState()
+
+                        store.wrapper.wrapper_reset
+
+                        for (let state in states)
+                            if (state !== 'initial$' && state !== 'history$')
+                                store.wrapper[state + '_force'] = states[state].value
 
                         return
 
@@ -82,11 +91,27 @@ export class Store extends Record {
                         if (parameter)
                             this.setValueState(parameter, 'undo')
 
+                        states = store.getState()
+
+                        store.wrapper.wrapper_reset
+                        
+                        for (let state in states)
+                            if (state !== 'initial$' && state !== 'history$')
+                                store.wrapper[state + '_force'] = states[state].value
+
                         return
 
                     default:
 
                         this.record.dispatch({ type: `${undid.name}_undo` })
+
+                        states = store.getState()
+
+                        store.wrapper.wrapper_reset
+
+                        for (let state in states)
+                            if (state !== 'initial$' && state !== 'history$')
+                                store.wrapper[state + '_force'] = states[state].value
 
                         return
                 }
@@ -95,6 +120,7 @@ export class Store extends Record {
             if (actionType === 'history$_redo') {
 
                 let redid = store.current.history$.present.value
+                let states
 
                 switch (redid.name) {
                     case 'initial$':
@@ -106,13 +132,43 @@ export class Store extends Record {
                         if (parameter)
                             this.setValueState(parameter, 'redo')
 
+                        states = store.getState()
+
+                        store.wrapper.wrapper_reset
+                        
+                        for (let state in states)
+                            if (state !== 'initial$' && state !== 'history$')
+                                store.wrapper[state + '_force'] = states[state].value
+
                         return
+
                     case 'delete$':
+
                         if (store.remove)
                             store.remove(redid.value, 'redo')
+
+                        states = store.getState()
+
+                        store.wrapper.wrapper_reset
+
+                        for (let state in states)
+                            if (state !== 'initial$' && state !== 'history$')
+                                store.wrapper[state + '_force'] = states[state].value
+                            
                         return
+
                     default:
+
                         this.record.dispatch({ type: `${redid.name}_redo` })
+
+                        states = store.getState()
+
+                        store.wrapper.wrapper_reset
+
+                        for (let state in states)
+                            if (state !== 'initial$' && state !== 'history$')
+                                store.wrapper[state + '_force'] = states[state].value
+
                         return
                 }
             }
@@ -120,8 +176,9 @@ export class Store extends Record {
             let payload: Payload = {}
             if (dispatched.action?.dispatched?.name) payload.target = dispatched.action.dispatched.name
             if (dispatched.action?.type) payload.trigger = dispatched.action.type
-            if (dispatched.action?.dispatched?.state?.value) payload.previous = dispatched.action.dispatched.state.value
-            if (dispatched.action?.value) payload.next = dispatched.action.value
+            if (dispatched.action?.dispatched?.state?.hasOwnProperty('value'))
+                payload.previous = dispatched.action.dispatched.state.value
+            if (dispatched.action?.hasOwnProperty('value')) payload.next = dispatched.action.value
 
             if (actionType.substring(actionType.length - 5, actionType.length) === '_undo') {
 
@@ -331,6 +388,8 @@ export class Store extends Record {
     #setActionHandler = () => {
 
         let store = this.store
+
+        store.actions = this.actions
 
         store.action = (name: string, action: string, value: any) => {
 

@@ -1,7 +1,5 @@
-import { Basket } from './basket'
-import { BasketObservable } from './basket'
-import { Build } from './store'
-import { StoreObservable } from './store'
+import { Basket, BasketObservable } from './basket'
+import { Build, StoreObservable } from './store'
 
 const b$ = Basket.getNewRegister(Basket)
 const bob$ = BasketObservable

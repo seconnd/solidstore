@@ -57,7 +57,7 @@ export class SetMiddleware extends Field{
 
             }
 
-            (this.store as CustomStore).dispatched.push(dispatched)
+            (this.store as CustomStore).dispatched!.push(dispatched)
 
             if (result) action = result
 

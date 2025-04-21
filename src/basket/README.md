@@ -175,8 +175,10 @@ import { filter } from 'rxjs'
 r$.x_config = {
   value: 5,
   beforeSet: new bob$().pipe(filter(val => val > 3)).subscribe({ next: (v) => console.log('Over 3:', v) })
+  afterSet: new bob$().pipe(filter(val => val > 3)).subscribe({ next: (v) => console.log('Over 3:', v) })
 }
-r$.x_before = 10;  // Outputs: 'Over 3: 5'
+r$.x_after = 8;  // Outputs: 'Over 3: 8'
+r$.x_before = 10;  // Outputs: 'Over 3: 8'
 console.log(r$.x);  // Outputs: 10
 ```
 

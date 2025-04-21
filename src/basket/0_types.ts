@@ -18,7 +18,8 @@ export interface ProxyHandler<T> {
     logger: (value: any) => string,
     typeCheck: (value: any) => string,
     method: (type: commands, target: Register, value?: any) => any,
-    convertToObservable: (method: Method) => BasketObservable
+    convertToObservable: (method: Method) => BasketObservable,
+    deleteProperty: (target: Register, prop: string) => true
 }
 
 export interface BasketObservable extends Subscription {

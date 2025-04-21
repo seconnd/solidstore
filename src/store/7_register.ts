@@ -16,7 +16,7 @@ export class Wrapper extends Reducer {
 
         const store = this.store
 
-        const register = class Register {}
+        const register = {}
 
         const handler: ProxyHandler<Register> = {
 
@@ -33,6 +33,14 @@ export class Wrapper extends Reducer {
                     case 'redo':
                         return this.method('redo', target)
 
+                    case 'history$':
+                        console.warn(`(STORE) Cannot access system state [ history$ ].`)
+                        return null
+
+                    case 'initial$':
+                        console.warn(`(STORE) Cannot access system state [ initial$ ].`)
+                        return null
+
                     case 'export_object':
                         return this.method('export_object', target)
 
@@ -44,6 +52,24 @@ export class Wrapper extends Reducer {
 
                     case 'export_json':
                         return this.method('export_json', target)
+
+                    case 'wrapper_reset':
+
+                        for (let element of Object.entries(target)) {
+                            delete target[element[0]]
+                            // store.remove!(element[0])
+                        }
+
+                        return null
+
+                    case 'reset':
+
+                        for (let element of Object.entries(target)) {
+                            delete target[element[0]]
+                            store.remove!(element[0])
+                        }
+
+                        return null
 
                 }
 
@@ -82,6 +108,7 @@ export class Wrapper extends Reducer {
 
                         store.action!(prop, action)
                         target[prop] = store.getState()[prop].value
+
 
                         if (isLogging) {
 
@@ -141,6 +168,14 @@ export class Wrapper extends Reducer {
                         console.warn(`(STORE) Cannot assign [ redo ].`)
                         return true
 
+                    case 'history$':
+                        console.warn(`(STORE) Cannot assign system state [ history$ ].`)
+                        return true
+
+                    case 'initial$':
+                        console.warn(`(STORE) Cannot assign system state [ initial$ ].`)
+                        return true
+
                     case 'import_object':
                         this.method('import_object', target, value)
                         return true
@@ -153,7 +188,7 @@ export class Wrapper extends Reducer {
                 const commands = prop.split('_')
                 prop = commands.shift() as string
 
-                let isLogging = false, isConfig = false, isAction = false, actions = []
+                let isLogging = false, isConfig = false, isForce = false, isAction = false, actions = []
 
                 for (let command of commands) {
 
@@ -164,12 +199,20 @@ export class Wrapper extends Reducer {
                         case 'config':
                             isConfig = true
                             break
+                        case 'force': // Not user command. It used by system.
+                            isForce = true
+                            break
                         default:
                             isAction = true
                             actions.push(command)
                     }
                 }
-                
+
+                if (isForce) {
+                    target[prop] = value
+                    return true
+                }
+
                 if (!target.hasOwnProperty(prop)) {
 
                     if (isAction) {
@@ -180,7 +223,8 @@ export class Wrapper extends Reducer {
                     if (isConfig) {
 
                         value.name = prop
-                        if (!value?.value) value.value = null
+
+                        if (!value.hasOwnProperty('value')) value.value = null
 
                         store.set!(value)
 
@@ -284,7 +328,7 @@ export class Wrapper extends Reducer {
 
                         for (let element in origin) {
                             if (element !== 'initial$' && element !== 'history$')
-                                object[element] = origin[element]
+                                object[element] = origin[element].value
                         }
 
                         return object
@@ -295,7 +339,7 @@ export class Wrapper extends Reducer {
 
                         for (let element in origin) {
                             if (element !== 'initial$' && element !== 'history$')
-                                object[element] = origin[element]
+                                object[element] = origin[element].value
                         }
 
                         return Object.entries(object)
@@ -308,7 +352,7 @@ export class Wrapper extends Reducer {
 
                         for (let element in origin) {
                             if (element !== 'initial$' && element !== 'history$')
-                                map.set(element, origin[element])
+                                map.set(element, origin[element].value)
                         }
 
                         return map
@@ -319,7 +363,7 @@ export class Wrapper extends Reducer {
 
                         for (let element in origin) {
                             if (element !== 'initial$' && element !== 'history$')
-                                object[element] = origin[element]
+                                object[element] = origin[element].value
                         }
 
                         return JSON.stringify(object)
@@ -332,8 +376,10 @@ export class Wrapper extends Reducer {
                             return true
                         }
 
-                        for (let element of Object.entries(target))
+                        for (let element of Object.entries(target)) {
                             delete target[element[0]]
+                            store.remove!(element[0])
+                        }
 
                         for (let key in value)
                             this.set(target, key + '_log', value[key])
@@ -350,14 +396,21 @@ export class Wrapper extends Reducer {
 
                         value = JSON.parse(value)
 
-                        for (let element of Object.entries(target))
+                        for (let element of Object.entries(target)) {
                             delete target[element[0]]
+                            store.remove!(element[0])
+                        }
 
                         for (let key in value)
                             this.set(target, key + '_log', value[key])
 
                         return true
                 }
+            },
+
+            deleteProperty: function (target, prop) {
+              console.warn(`Cannot delete [ ${prop} ]. Please use delete command. -> S$.${prop}_delete`);
+              return true
             }
         }
 

@@ -1,5 +1,4 @@
 import { Action, Reducer, Store } from 'redux'
-import { LinkedList } from '../queue/0_types.js'
 
 export type State = { value: any, timestamp: number }
 export type Method = (data: any) => void | any
@@ -44,7 +43,7 @@ export interface Parameter {
 export interface CustomStore extends Store {
     dispatch: any
     dispatch0?: any,
-    dispatched?: LinkedList,
+    dispatched?: any,
     current?: any,
     currentRecord?: any,
     parameters?: Map <string, Parameter>,
@@ -53,6 +52,7 @@ export interface CustomStore extends Store {
     update?: (name: string, value: any) => void,
     remove?: (name: string, isSilent?: false | 'undo' | 'redo') => void,
     action?: (name: string, action: string, value?: any) => void,
+    actions?: Map <string, any>,
     undo?: () => void,
     redo?: () => void,
     capture?: (name: string, value: any) => void,
@@ -84,7 +84,8 @@ export interface ProxyHandler<T> {
     get: (target: Register, prop: string) => any,
     set: (target: Register, prop: string, value: any) => true,
     logger: (value: any) => string,
-    method: (type: commands, target: Register, value?: any) => any
+    method: (type: commands, target: Register, value?: any) => any,
+    deleteProperty: (target: Register, prop: string) => true
 }
 
 export interface Config {

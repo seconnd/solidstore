@@ -277,7 +277,8 @@ export class Basket extends AbstractBasket {
 					case 'export_object':
 
 						for (let element of Object.entries(target))
-							object[element[0]] = element[1]
+							if (element[0] !== 'getNewRegister')
+								object[element[0]] = element[1]
 
 						return object
 

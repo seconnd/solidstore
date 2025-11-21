@@ -629,7 +629,7 @@ v(pe, "getNewRegister", (n = {}) => {
       switch (t) {
         case "export_object":
           for (let c of Object.entries(r))
-            o[c[0]] = c[1];
+            c[0] !== "getNewRegister" && (o[c[0]] = c[1]);
           return o;
         case "export_array":
           return Object.entries(r);

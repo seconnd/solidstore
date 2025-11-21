@@ -39,6 +39,7 @@ r$.foo = 123;
 console.log(r$.foo);       // 123
 r$.foo = 456;              // Updates state
 r$.foo_log = 789;          // Triggers console logging
+r$.foo_is;                 // Check exist the value
 
 // Attach config (timing hooks/extensions)
 r$.bar_config = {

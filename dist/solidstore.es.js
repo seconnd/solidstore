@@ -1,27 +1,27 @@
 var Je = Object.defineProperty;
-var we = (s) => {
+var Se = (s) => {
   throw TypeError(s);
 };
-var Ke = (s, n, e) => n in s ? Je(s, n, { enumerable: !0, configurable: !0, writable: !0, value: e }) : s[n] = e;
-var v = (s, n, e) => Ke(s, typeof n != "symbol" ? n + "" : n, e), He = (s, n, e) => n.has(s) || we("Cannot " + e);
-var g = (s, n, e) => (He(s, n, "read from private field"), e ? e.call(s) : n.get(s)), m = (s, n, e) => n.has(s) ? we("Cannot add the same private member more than once") : n instanceof WeakSet ? n.add(s) : n.set(s, e);
-var ue = function(s, n) {
-  return ue = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(e, t) {
+var He = (s, n, e) => n in s ? Je(s, n, { enumerable: !0, configurable: !0, writable: !0, value: e }) : s[n] = e;
+var v = (s, n, e) => He(s, typeof n != "symbol" ? n + "" : n, e), Le = (s, n, e) => n.has(s) || Se("Cannot " + e);
+var g = (s, n, e) => (Le(s, n, "read from private field"), e ? e.call(s) : n.get(s)), m = (s, n, e) => n.has(s) ? Se("Cannot add the same private member more than once") : n instanceof WeakSet ? n.add(s) : n.set(s, e);
+var ae = function(s, n) {
+  return ae = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(e, t) {
     e.__proto__ = t;
   } || function(e, t) {
     for (var r in t) Object.prototype.hasOwnProperty.call(t, r) && (e[r] = t[r]);
-  }, ue(s, n);
+  }, ae(s, n);
 };
 function ee(s, n) {
   if (typeof n != "function" && n !== null)
     throw new TypeError("Class extends value " + String(n) + " is not a constructor or null");
-  ue(s, n);
+  ae(s, n);
   function e() {
     this.constructor = s;
   }
   s.prototype = n === null ? Object.create(n) : (e.prototype = n.prototype, new e());
 }
-function ae(s) {
+function le(s) {
   var n = typeof Symbol == "function" && Symbol.iterator, e = n && s[n], t = 0;
   if (e) return e.call(s);
   if (s && typeof s.length == "number") return {
@@ -31,7 +31,7 @@ function ae(s) {
   };
   throw new TypeError(n ? "Object is not iterable." : "Symbol.iterator is not defined.");
 }
-function le(s, n) {
+function fe(s, n) {
   var e = typeof Symbol == "function" && s[Symbol.iterator];
   if (!e) return s;
   var t = e.call(s), r, i = [], o;
@@ -48,7 +48,7 @@ function le(s, n) {
   }
   return i;
 }
-function fe(s, n, e) {
+function he(s, n, e) {
   if (e || arguments.length === 2) for (var t = 0, r = n.length, i; t < r; t++)
     (i || !(t in n)) && (i || (i = Array.prototype.slice.call(n, 0, t)), i[t] = n[t]);
   return s.concat(i || Array.prototype.slice.call(n));
@@ -56,13 +56,13 @@ function fe(s, n, e) {
 function O(s) {
   return typeof s == "function";
 }
-function Pe(s) {
+function je(s) {
   var n = function(t) {
     Error.call(t), t.stack = new Error().stack;
   }, e = s(n);
   return e.prototype = Object.create(Error.prototype), e.prototype.constructor = e, e;
 }
-var se = Pe(function(s) {
+var se = je(function(s) {
   return function(e) {
     s(this), this.message = e ? e.length + ` errors occurred during unsubscription:
 ` + e.map(function(t, r) {
@@ -71,7 +71,7 @@ var se = Pe(function(s) {
   `) : "", this.name = "UnsubscriptionError", this.errors = e;
   };
 });
-function he(s, n) {
+function de(s, n) {
   if (s) {
     var e = s.indexOf(n);
     0 <= e && s.splice(e, 1);
@@ -89,7 +89,7 @@ var te = function() {
       if (o)
         if (this._parentage = null, Array.isArray(o))
           try {
-            for (var u = ae(o), c = u.next(); !c.done; c = u.next()) {
+            for (var u = le(o), c = u.next(); !c.done; c = u.next()) {
               var a = c.value;
               a.remove(this);
             }
@@ -115,12 +115,12 @@ var te = function() {
       if (l) {
         this._finalizers = null;
         try {
-          for (var d = ae(l), b = d.next(); !b.done; b = d.next()) {
+          for (var d = le(l), b = d.next(); !b.done; b = d.next()) {
             var y = b.value;
             try {
-              Se(y);
+              xe(y);
             } catch (f) {
-              i = i ?? [], f instanceof se ? i = fe(fe([], le(i)), le(f.errors)) : i.push(f);
+              i = i ?? [], f instanceof se ? i = he(he([], fe(i)), fe(f.errors)) : i.push(f);
             }
           }
         } catch (f) {
@@ -140,7 +140,7 @@ var te = function() {
     var e;
     if (n && n !== this)
       if (this.closed)
-        Se(n);
+        xe(n);
       else {
         if (n instanceof s) {
           if (n.closed || n._hasParent(this))
@@ -157,52 +157,52 @@ var te = function() {
     this._parentage = Array.isArray(e) ? (e.push(n), e) : e ? [e, n] : n;
   }, s.prototype._removeParent = function(n) {
     var e = this._parentage;
-    e === n ? this._parentage = null : Array.isArray(e) && he(e, n);
+    e === n ? this._parentage = null : Array.isArray(e) && de(e, n);
   }, s.prototype.remove = function(n) {
     var e = this._finalizers;
-    e && he(e, n), n instanceof s && n._removeParent(this);
+    e && de(e, n), n instanceof s && n._removeParent(this);
   }, s.EMPTY = function() {
     var n = new s();
     return n.closed = !0, n;
   }(), s;
-}(), je = te.EMPTY;
-function Ae(s) {
+}(), Ae = te.EMPTY;
+function Ce(s) {
   return s instanceof te || s && "closed" in s && O(s.remove) && O(s.add) && O(s.unsubscribe);
 }
-function Se(s) {
+function xe(s) {
   O(s) ? s() : s.unsubscribe();
 }
-var Le = {
+var Ye = {
   Promise: void 0
-}, Ye = {
+}, Ve = {
   setTimeout: function(s, n) {
     for (var e = [], t = 2; t < arguments.length; t++)
       e[t - 2] = arguments[t];
-    return setTimeout.apply(void 0, fe([s, n], le(e)));
+    return setTimeout.apply(void 0, he([s, n], fe(e)));
   },
   clearTimeout: function(s) {
     return clearTimeout(s);
   },
   delegate: void 0
 };
-function Ve(s) {
-  Ye.setTimeout(function() {
+function ze(s) {
+  Ve.setTimeout(function() {
     throw s;
   });
 }
-function xe() {
+function Oe() {
 }
 function C(s) {
   s();
 }
-var Ce = function(s) {
+var ke = function(s) {
   ee(n, s);
   function n(e) {
     var t = s.call(this) || this;
-    return t.isStopped = !1, e ? (t.destination = e, Ae(e) && e.add(t)) : t.destination = We, t;
+    return t.isStopped = !1, e ? (t.destination = e, Ce(e) && e.add(t)) : t.destination = qe, t;
   }
   return n.create = function(e, t, r) {
-    return new de(e, t, r);
+    return new pe(e, t, r);
   }, n.prototype.next = function(e) {
     this.isStopped || this._next(e);
   }, n.prototype.error = function(e) {
@@ -226,7 +226,7 @@ var Ce = function(s) {
       this.unsubscribe();
     }
   }, n;
-}(te), ze = function() {
+}(te), Ge = function() {
   function s(n) {
     this.partialObserver = n;
   }
@@ -257,7 +257,7 @@ var Ce = function(s) {
         A(e);
       }
   }, s;
-}(), de = function(s) {
+}(), pe = function(s) {
   ee(n, s);
   function n(e, t, r) {
     var i = s.call(this) || this, o;
@@ -265,35 +265,35 @@ var Ce = function(s) {
       next: e ?? void 0,
       error: t ?? void 0,
       complete: r ?? void 0
-    } : o = e, i.destination = new ze(o), i;
+    } : o = e, i.destination = new Ge(o), i;
   }
   return n;
-}(Ce);
+}(ke);
 function A(s) {
-  Ve(s);
+  ze(s);
 }
-function Ge(s) {
+function We(s) {
   throw s;
 }
-var We = {
+var qe = {
   closed: !0,
-  next: xe,
-  error: Ge,
-  complete: xe
-}, qe = function() {
+  next: Oe,
+  error: We,
+  complete: Oe
+}, Qe = function() {
   return typeof Symbol == "function" && Symbol.observable || "@@observable";
 }();
-function Qe(s) {
+function Xe(s) {
   return s;
 }
-function Xe(s) {
-  return s.length === 0 ? Qe : s.length === 1 ? s[0] : function(e) {
+function Ze(s) {
+  return s.length === 0 ? Xe : s.length === 1 ? s[0] : function(e) {
     return s.reduce(function(t, r) {
       return r(t);
     }, e);
   };
 }
-var Oe = function() {
+var Ee = function() {
   function s(n) {
     n && (this._subscribe = n);
   }
@@ -301,7 +301,7 @@ var Oe = function() {
     var e = new s();
     return e.source = this, e.operator = n, e;
   }, s.prototype.subscribe = function(n, e, t) {
-    var r = this, i = et(n) ? n : new de(n, e, t);
+    var r = this, i = tt(n) ? n : new pe(n, e, t);
     return C(function() {
       var o = r, u = o.operator, c = o.source;
       i.add(u ? u.call(i, c) : c ? r._subscribe(i) : r._trySubscribe(i));
@@ -314,8 +314,8 @@ var Oe = function() {
     }
   }, s.prototype.forEach = function(n, e) {
     var t = this;
-    return e = Ee(e), new e(function(r, i) {
-      var o = new de({
+    return e = Te(e), new e(function(r, i) {
+      var o = new pe({
         next: function(u) {
           try {
             n(u);
@@ -331,15 +331,15 @@ var Oe = function() {
   }, s.prototype._subscribe = function(n) {
     var e;
     return (e = this.source) === null || e === void 0 ? void 0 : e.subscribe(n);
-  }, s.prototype[qe] = function() {
+  }, s.prototype[Qe] = function() {
     return this;
   }, s.prototype.pipe = function() {
     for (var n = [], e = 0; e < arguments.length; e++)
       n[e] = arguments[e];
-    return Xe(n)(this);
+    return Ze(n)(this);
   }, s.prototype.toPromise = function(n) {
     var e = this;
-    return n = Ee(n), new n(function(t, r) {
+    return n = Te(n), new n(function(t, r) {
       var i;
       e.subscribe(function(o) {
         return i = o;
@@ -353,17 +353,17 @@ var Oe = function() {
     return new s(n);
   }, s;
 }();
-function Ee(s) {
+function Te(s) {
   var n;
-  return (n = s ?? Le.Promise) !== null && n !== void 0 ? n : Promise;
-}
-function Ze(s) {
-  return s && O(s.next) && O(s.error) && O(s.complete);
+  return (n = s ?? Ye.Promise) !== null && n !== void 0 ? n : Promise;
 }
 function et(s) {
-  return s && s instanceof Ce || Ze(s) && Ae(s);
+  return s && O(s.next) && O(s.error) && O(s.complete);
 }
-var tt = Pe(function(s) {
+function tt(s) {
+  return s && s instanceof ke || et(s) && Ce(s);
+}
+var rt = je(function(s) {
   return function() {
     s(this), this.name = "ObjectUnsubscribedError", this.message = "object unsubscribed";
   };
@@ -374,11 +374,11 @@ var tt = Pe(function(s) {
     return e.closed = !1, e.currentObservers = null, e.observers = [], e.isStopped = !1, e.hasError = !1, e.thrownError = null, e;
   }
   return n.prototype.lift = function(e) {
-    var t = new Te(this, this);
+    var t = new Re(this, this);
     return t.operator = e, t;
   }, n.prototype._throwIfClosed = function() {
     if (this.closed)
-      throw new tt();
+      throw new rt();
   }, n.prototype.next = function(e) {
     var t = this;
     C(function() {
@@ -386,7 +386,7 @@ var tt = Pe(function(s) {
       if (t._throwIfClosed(), !t.isStopped) {
         t.currentObservers || (t.currentObservers = Array.from(t.observers));
         try {
-          for (var o = ae(t.currentObservers), u = o.next(); !u.done; u = o.next()) {
+          for (var o = le(t.currentObservers), u = o.next(); !u.done; u = o.next()) {
             var c = u.value;
             c.next(e);
           }
@@ -434,19 +434,19 @@ var tt = Pe(function(s) {
     return this._throwIfClosed(), this._checkFinalizedStatuses(e), this._innerSubscribe(e);
   }, n.prototype._innerSubscribe = function(e) {
     var t = this, r = this, i = r.hasError, o = r.isStopped, u = r.observers;
-    return i || o ? je : (this.currentObservers = null, u.push(e), new te(function() {
-      t.currentObservers = null, he(u, e);
+    return i || o ? Ae : (this.currentObservers = null, u.push(e), new te(function() {
+      t.currentObservers = null, de(u, e);
     }));
   }, n.prototype._checkFinalizedStatuses = function(e) {
     var t = this, r = t.hasError, i = t.thrownError, o = t.isStopped;
     r ? e.error(i) : o && e.complete();
   }, n.prototype.asObservable = function() {
-    var e = new Oe();
+    var e = new Ee();
     return e.source = this, e;
   }, n.create = function(e, t) {
-    return new Te(e, t);
+    return new Re(e, t);
   }, n;
-}(Oe), Te = function(s) {
+}(Ee), Re = function(s) {
   ee(n, s);
   function n(e, t) {
     var r = s.call(this) || this;
@@ -463,10 +463,10 @@ var tt = Pe(function(s) {
     (t = (e = this.destination) === null || e === void 0 ? void 0 : e.complete) === null || t === void 0 || t.call(e);
   }, n.prototype._subscribe = function(e) {
     var t, r;
-    return (r = (t = this.source) === null || t === void 0 ? void 0 : t.subscribe(e)) !== null && r !== void 0 ? r : je;
+    return (r = (t = this.source) === null || t === void 0 ? void 0 : t.subscribe(e)) !== null && r !== void 0 ? r : Ae;
   }, n;
 }(_e);
-class ke extends _e {
+class Ie extends _e {
   constructor() {
     super();
     v(this, "pipe0", super.pipe);
@@ -484,23 +484,23 @@ class ke extends _e {
     });
   }
 }
-class rt {
+class st {
   constructor() {
     v(this, "getNewRegister");
   }
 }
-const st = "font-style: italic; font-weight: 700; color: #D9F8C4;", nt = "font-style: italic; font-weight: 700; color: #ebc078;", it = "font-style: italic; font-weight: 700; color: #eb6c63;", ot = "font-style: italic; font-weight: 700; color: #8fdfff;";
-class pe extends rt {
+const nt = "font-style: italic; font-weight: 700; color: #D9F8C4;", it = "font-style: italic; font-weight: 700; color: #ebc078;", ot = "font-style: italic; font-weight: 700; color: #eb6c63;", ne = "font-style: italic; font-weight: 700; color: #8fdfff;";
+class ye extends st {
 }
 // constructor () {
 // 	super()
 // 	this.getNewRegister(this)
 // }
-v(pe, "getNewRegister", (n = {}) => {
+v(ye, "getNewRegister", (n = {}) => {
   const e = {
     configs$: /* @__PURE__ */ new Map(),
     get: function(t, r) {
-      var l, d, b;
+      var d, b, y;
       switch (r) {
         case "export_object":
           return this.method("export_object", t);
@@ -515,30 +515,33 @@ v(pe, "getNewRegister", (n = {}) => {
       }
       const i = r.split("_");
       r = i.shift();
-      let o = !1, u = !1, c = !1, a = !1, p = !1;
+      let o = !1, u = !1, c = !1, a = !1, p = !1, l = !1;
       if (!t.hasOwnProperty(r))
         return console.warn(`(BASKET) Cannot access. [ ${r} ] is no exists.`), !0;
-      for (let y of i)
-        switch (y) {
-          case "log":
+      for (let f of i)
+        switch (f) {
+          case "is":
             o = !0;
             break;
-          case "config":
+          case "log":
             u = !0;
             break;
-          case "delete":
+          case "config":
             c = !0;
             break;
-          case "before":
+          case "delete":
             a = !0;
             break;
-          case "exec":
+          case "before":
             p = !0;
             break;
+          case "exec":
+            l = !0;
+            break;
           default:
-            return console.warn(`(BASKET) _(underbar or underline) can't use in the name. please use camelcase. or invalid command. [ ${y} ]`), !0;
+            return console.warn(`(BASKET) _(underbar or underline) can't use in the name. please use camelcase. or invalid command. [ ${f} ]`), !0;
         }
-      return c ? ((l = this.configs$.get(r)) != null && l.beforeDelete && this.configs$.get(r).beforeDelete.next(t[r]), delete t[r], this.configs$.delete(r), o && console.log(`%c(BASKET) [ ${r} ] is deleted.`, it), (d = this.configs$.get(r)) != null && d.afterDelete && this.configs$.get(r).afterDelete.next(null), !0) : (o && (console.groupCollapsed(`%c(BASKET) [ ${r} ] = ${this.logger(t[r])}(${this.typeCheck(t[r])}) is accessed.`, ot), console.log(t[r]), console.trace(), console.groupEnd()), u ? this.configs$.has(r) ? this.configs$.get(r) : null : ((b = this.configs$.get(r)) != null && b.beforeGet && (a || p) && this.configs$.get(r).beforeGet.next(t[r]), t[r]));
+      return o ? t[r] ? (console.log(`%c(BASKET) [ ${r} ] is exist.`, ne), !0) : (console.log(`%c(BASKET) [ ${r} ] is no exist.`, ne), !1) : a ? ((d = this.configs$.get(r)) != null && d.beforeDelete && this.configs$.get(r).beforeDelete.next(t[r]), delete t[r], this.configs$.delete(r), u && console.log(`%c(BASKET) [ ${r} ] is deleted.`, ot), (b = this.configs$.get(r)) != null && b.afterDelete && this.configs$.get(r).afterDelete.next(null), !0) : (u && (console.groupCollapsed(`%c(BASKET) [ ${r} ] = ${this.logger(t[r])}(${this.typeCheck(t[r])}) is accessed.`, ne), console.log(t[r]), console.trace(), console.groupEnd()), c ? this.configs$.has(r) ? this.configs$.get(r) : null : ((y = this.configs$.get(r)) != null && y.beforeGet && (p || l) && this.configs$.get(r).beforeGet.next(t[r]), t[r]));
     },
     set: function(t, r, i) {
       var b, y;
@@ -605,9 +608,9 @@ v(pe, "getNewRegister", (n = {}) => {
           this.configs$.set(r, d), i = i.value;
         } else
           this.configs$.set(r, d), d = this.configs$.get(r);
-        return d != null && d.beforeCreate && d.beforeCreate.next(i), t[r] = i, d != null && d.afterCreate && d.afterCreate.next(i), u && (console.groupCollapsed(`%c(BASKET) [ ${r} ] = ${this.logger(i)}(${this.typeCheck(i)}) is created.`, st), console.log(i), console.trace(), console.groupEnd()), !0;
+        return d != null && d.beforeCreate && d.beforeCreate.next(i), t[r] = i, d != null && d.afterCreate && d.afterCreate.next(i), u && (console.groupCollapsed(`%c(BASKET) [ ${r} ] = ${this.logger(i)}(${this.typeCheck(i)}) is created.`, nt), console.log(i), console.trace(), console.groupEnd()), !0;
       }
-      return c ? (console.warn(`(BASKET) Cannot configure. Configurate initialize. The [ ${r} ] is already exists.`), !0) : ((b = this.configs$.get(r)) != null && b.beforeSet && (a || l) && this.configs$.get(r).beforeSet.next(t[r]), t[r] = i, u && (console.groupCollapsed(`%c(BASKET) [ ${r} ] = ${this.logger(i)}(${this.typeCheck(i)}) is updated.`, nt), console.log(i), console.trace(), console.groupEnd()), (y = this.configs$.get(r)) != null && y.afterSet && (p || l) && this.configs$.get(r).afterSet.next(i), !0);
+      return c ? (console.warn(`(BASKET) Cannot configure. Configurate initialize. The [ ${r} ] is already exists.`), !0) : ((b = this.configs$.get(r)) != null && b.beforeSet && (a || l) && this.configs$.get(r).beforeSet.next(t[r]), t[r] = i, u && (console.groupCollapsed(`%c(BASKET) [ ${r} ] = ${this.logger(i)}(${this.typeCheck(i)}) is updated.`, it), console.log(i), console.trace(), console.groupEnd()), (y = this.configs$.get(r)) != null && y.afterSet && (p || l) && this.configs$.get(r).afterSet.next(i), !0);
     },
     logger: (t) => {
       let r;
@@ -663,14 +666,14 @@ v(pe, "getNewRegister", (n = {}) => {
           return !0;
       }
     },
-    convertToObservable: (t) => typeof t != "function" ? t : new ke().subscribe(t),
+    convertToObservable: (t) => typeof t != "function" ? t : new Ie().subscribe(t),
     deleteProperty: function(t, r) {
       return console.warn(`Cannot delete [ ${r} ]. Please use delete command. -> S$.${r}_delete`), !0;
     }
   };
   return new Proxy(n, e);
 });
-class Ie extends _e {
+class Ue extends _e {
   constructor() {
     super();
     v(this, "pipe0", super.pipe);
@@ -688,13 +691,13 @@ class Ie extends _e {
     });
   }
 }
-function _(s) {
+function $(s) {
   return `Minified Redux error #${s}; visit https://redux.js.org/Errors?code=${s} for the full message or use the non-minified dev environment for full errors. `;
 }
-var ct = typeof Symbol == "function" && Symbol.observable || "@@observable", Re = ct, ne = () => Math.random().toString(36).substring(7).split("").join("."), ut = {
-  INIT: `@@redux/INIT${/* @__PURE__ */ ne()}`,
-  REPLACE: `@@redux/REPLACE${/* @__PURE__ */ ne()}`,
-  PROBE_UNKNOWN_ACTION: () => `@@redux/PROBE_UNKNOWN_ACTION${ne()}`
+var ct = typeof Symbol == "function" && Symbol.observable || "@@observable", Pe = ct, ie = () => Math.random().toString(36).substring(7).split("").join("."), ut = {
+  INIT: `@@redux/INIT${/* @__PURE__ */ ie()}`,
+  REPLACE: `@@redux/REPLACE${/* @__PURE__ */ ie()}`,
+  PROBE_UNKNOWN_ACTION: () => `@@redux/PROBE_UNKNOWN_ACTION${ie()}`
 }, k = ut;
 function at(s) {
   if (typeof s != "object" || s === null)
@@ -704,15 +707,15 @@ function at(s) {
     n = Object.getPrototypeOf(n);
   return Object.getPrototypeOf(s) === n || Object.getPrototypeOf(s) === null;
 }
-function Ue(s, n, e) {
+function Ne(s, n, e) {
   if (typeof s != "function")
-    throw new Error(_(2));
+    throw new Error($(2));
   if (typeof n == "function" && typeof e == "function" || typeof e == "function" && typeof arguments[3] == "function")
-    throw new Error(_(0));
+    throw new Error($(0));
   if (typeof n == "function" && typeof e > "u" && (e = n, n = void 0), typeof e < "u") {
     if (typeof e != "function")
-      throw new Error(_(1));
-    return e(Ue)(s, n);
+      throw new Error($(1));
+    return e(Ne)(s, n);
   }
   let t = s, r = n, i = /* @__PURE__ */ new Map(), o = i, u = 0, c = !1;
   function a() {
@@ -722,34 +725,34 @@ function Ue(s, n, e) {
   }
   function p() {
     if (c)
-      throw new Error(_(3));
+      throw new Error($(3));
     return r;
   }
   function l(h) {
     if (typeof h != "function")
-      throw new Error(_(4));
+      throw new Error($(4));
     if (c)
-      throw new Error(_(5));
+      throw new Error($(5));
     let S = !0;
     a();
     const E = u++;
     return o.set(E, h), function() {
       if (S) {
         if (c)
-          throw new Error(_(6));
+          throw new Error($(6));
         S = !1, a(), o.delete(E), i = null;
       }
     };
   }
   function d(h) {
     if (!at(h))
-      throw new Error(_(7));
+      throw new Error($(7));
     if (typeof h.type > "u")
-      throw new Error(_(8));
+      throw new Error($(8));
     if (typeof h.type != "string")
-      throw new Error(_(17));
+      throw new Error($(17));
     if (c)
-      throw new Error(_(9));
+      throw new Error($(9));
     try {
       c = !0, r = t(r, h);
     } finally {
@@ -761,7 +764,7 @@ function Ue(s, n, e) {
   }
   function b(h) {
     if (typeof h != "function")
-      throw new Error(_(10));
+      throw new Error($(10));
     t = h, d({
       type: k.REPLACE
     });
@@ -779,16 +782,16 @@ function Ue(s, n, e) {
        */
       subscribe(S) {
         if (typeof S != "object" || S === null)
-          throw new Error(_(11));
+          throw new Error($(11));
         function E() {
-          const $e = S;
-          $e.next && $e.next(p());
+          const we = S;
+          we.next && we.next(p());
         }
         return E(), {
           unsubscribe: h(E)
         };
       },
-      [Re]() {
+      [Pe]() {
         return this;
       }
     };
@@ -800,11 +803,11 @@ function Ue(s, n, e) {
     subscribe: l,
     getState: p,
     replaceReducer: b,
-    [Re]: y
+    [Pe]: y
   };
 }
-function Ne(s, n, e) {
-  return Ue(s, n, e);
+function Me(s, n, e) {
+  return Ne(s, n, e);
 }
 function lt(s) {
   Object.keys(s).forEach((n) => {
@@ -812,11 +815,11 @@ function lt(s) {
     if (typeof e(void 0, {
       type: k.INIT
     }) > "u")
-      throw new Error(_(12));
+      throw new Error($(12));
     if (typeof e(void 0, {
       type: k.PROBE_UNKNOWN_ACTION()
     }) > "u")
-      throw new Error(_(13));
+      throw new Error($(13));
   });
 }
 function T(s) {
@@ -840,26 +843,26 @@ function T(s) {
     for (let p = 0; p < t.length; p++) {
       const l = t[p], d = e[l], b = o[l], y = d(b, u);
       if (typeof y > "u")
-        throw u && u.type, new Error(_(14));
+        throw u && u.type, new Error($(14));
       a[l] = y, c = c || y !== b;
     }
     return c = c || t.length !== Object.keys(o).length, c ? a : o;
   };
 }
-function Me(...s) {
+function De(...s) {
   return s.length === 0 ? (n) => n : s.length === 1 ? s[0] : s.reduce((n, e) => (...t) => n(e(...t)));
 }
 function ft(...s) {
   return (n) => (e, t) => {
     const r = n(e, t);
     let i = () => {
-      throw new Error(_(15));
+      throw new Error($(15));
     };
     const o = {
       getState: r.getState,
       dispatch: (c, ...a) => i(c, ...a)
     }, u = s.map((c) => c(o));
-    return i = Me(...u)(r.dispatch), {
+    return i = De(...u)(r.dispatch), {
       ...r,
       dispatch: i
     };
@@ -873,14 +876,14 @@ const j = {
   JUMP: "@@redux-undo/JUMP",
   CLEAR_HISTORY: "@@redux-undo/CLEAR_HISTORY"
 };
-function ye(s, n = []) {
+function be(s, n = []) {
   return Array.isArray(s) ? s : typeof s == "string" ? [s] : n;
 }
 function ht(s) {
   return typeof s.present < "u" && typeof s.future < "u" && typeof s.past < "u" && Array.isArray(s.future) && Array.isArray(s.past);
 }
-function be(s) {
-  const n = ye(s);
+function ge(s) {
+  const n = be(s);
   return (e) => n.indexOf(e.type) >= 0;
 }
 function P(s, n, e, t = null) {
@@ -895,7 +898,7 @@ function P(s, n, e, t = null) {
   };
 }
 let re, w;
-const ge = {
+const ve = {
   prevState: "#9E9E9E",
   action: "#03A9F4",
   nextState: "#4CAF50"
@@ -913,7 +916,7 @@ function pt() {
   const { header: s, prev: n, next: e, action: t, msgs: r } = w;
   console.group ? (console.groupCollapsed(...s), console.log(...n), console.log(...t), console.log(...e), console.log(...r), console.groupEnd()) : (console.log(...s), console.log(...n), console.log(...t), console.log(...e), console.log(...r));
 }
-function ve(s, n, e) {
+function me(s, n, e) {
   return [
     `%c${s}`,
     `color: ${n}; font-weight: bold`,
@@ -921,32 +924,32 @@ function ve(s, n, e) {
   ];
 }
 function yt(s, n) {
-  dt(), re && (console.group ? (w.header = ["%credux-undo", "font-style: italic", "action", s.type], w.action = ve("action", ge.action, s), w.prev = ve("prev history", ge.prevState, n)) : (w.header = ["redux-undo action", s.type], w.action = ["action", s], w.prev = ["prev history", n]));
+  dt(), re && (console.group ? (w.header = ["%credux-undo", "font-style: italic", "action", s.type], w.action = me("action", ve.action, s), w.prev = me("prev history", ve.prevState, n)) : (w.header = ["redux-undo action", s.type], w.action = ["action", s], w.prev = ["prev history", n]));
 }
 function x(s) {
-  re && (console.group ? w.next = ve("next history", ge.nextState, s) : w.next = ["next history", s], pt());
+  re && (console.group ? w.next = me("next history", ve.nextState, s) : w.next = ["next history", s], pt());
 }
-function $(...s) {
+function _(...s) {
   re && (w.msgs = w.msgs.concat([...s, `
 `]));
 }
 function bt(s) {
   re = s;
 }
-function ie(s, n) {
+function oe(s, n) {
   const e = P([], s, []);
   return n && (e._latestUnfiltered = null), e;
 }
 function gt(s, n, e, t) {
   const r = s.past.length + 1;
-  $("inserting", n), $("new free: ", e - r);
+  _("inserting", n), _("new free: ", e - r);
   const { past: i, _latestUnfiltered: o } = s, u = e && e <= r, c = i.slice(u ? 1 : 0), a = o != null ? [
     ...c,
     o
   ] : c;
   return P(a, n, [], t);
 }
-function De(s, n) {
+function Be(s, n) {
   if (n < 0 || n >= s.future.length)
     return s;
   const { past: e, future: t, _latestUnfiltered: r } = s, i = [...e, r, ...t.slice(0, n)], o = t[n], u = t.slice(n + 1);
@@ -958,13 +961,13 @@ function Fe(s, n) {
   const { past: e, future: t, _latestUnfiltered: r } = s, i = e.slice(0, n), o = [...e.slice(n + 1), r, ...t], u = e[n];
   return P(i, u, o);
 }
-function oe(s, n) {
-  return n > 0 ? De(s, n - 1) : n < 0 ? Fe(s, s.past.length + n) : s;
+function ce(s, n) {
+  return n > 0 ? Be(s, n - 1) : n < 0 ? Fe(s, s.past.length + n) : s;
 }
 function vt(s, n) {
   return n.indexOf(s) > -1 ? s : !s;
 }
-function me(s, n = {}) {
+function $e(s, n = {}) {
   bt(n.debug);
   const e = {
     limit: void 0,
@@ -979,8 +982,8 @@ function me(s, n = {}) {
     ignoreInitialState: !1,
     syncFilter: !1,
     ...n,
-    initTypes: ye(n.initTypes, ["@@redux-undo/INIT"]),
-    clearHistoryType: ye(
+    initTypes: be(n.initTypes, ["@@redux-undo/INIT"]),
+    clearHistoryType: be(
       n.clearHistoryType,
       [j.CLEAR_HISTORY]
     )
@@ -993,24 +996,24 @@ function me(s, n = {}) {
     yt(o, i);
     let c = i;
     if (!r)
-      if ($("history is uninitialized"), i === void 0) {
+      if (_("history is uninitialized"), i === void 0) {
         const p = s(i, { type: "@@redux-undo/CREATE_HISTORY" }, ...u);
-        return c = ie(
+        return c = oe(
           p,
           e.ignoreInitialState
-        ), $("do not set initialState on probe actions"), x(c), c;
+        ), _("do not set initialState on probe actions"), x(c), c;
       } else
         ht(i) ? (c = r = e.ignoreInitialState ? i : P(
           i.past,
           i.present,
           i.future
-        ), $(
+        ), _(
           "initialHistory initialized: initialState is a history",
           r
-        )) : (c = r = ie(
+        )) : (c = r = oe(
           i,
           e.ignoreInitialState
-        ), $(
+        ), _(
           "initialHistory initialized: initialState is not a history",
           r
         ));
@@ -1019,24 +1022,24 @@ function me(s, n = {}) {
       case void 0:
         return c;
       case e.undoType:
-        return a = oe(c, -1), $("perform undo"), x(a), t(a, o, ...u);
+        return a = ce(c, -1), _("perform undo"), x(a), t(a, o, ...u);
       case e.redoType:
-        return a = oe(c, 1), $("perform redo"), x(a), t(a, o, ...u);
+        return a = ce(c, 1), _("perform redo"), x(a), t(a, o, ...u);
       case e.jumpToPastType:
-        return a = Fe(c, o.index), $(`perform jumpToPast to ${o.index}`), x(a), t(a, o, ...u);
+        return a = Fe(c, o.index), _(`perform jumpToPast to ${o.index}`), x(a), t(a, o, ...u);
       case e.jumpToFutureType:
-        return a = De(c, o.index), $(`perform jumpToFuture to ${o.index}`), x(a), t(a, o, ...u);
+        return a = Be(c, o.index), _(`perform jumpToFuture to ${o.index}`), x(a), t(a, o, ...u);
       case e.jumpType:
-        return a = oe(c, o.index), $(`perform jump to ${o.index}`), x(a), t(a, o, ...u);
+        return a = ce(c, o.index), _(`perform jump to ${o.index}`), x(a), t(a, o, ...u);
       case vt(o.type, e.clearHistoryType):
-        return a = ie(c.present, e.ignoreInitialState), $("perform clearHistory"), x(a), t(a, o, ...u);
+        return a = oe(c.present, e.ignoreInitialState), _("perform clearHistory"), x(a), t(a, o, ...u);
       default:
         if (a = s(
           c.present,
           o,
           ...u
         ), e.initTypes.some((l) => l === o.type))
-          return $("reset history due to init action"), x(r), r;
+          return _("reset history due to init action"), x(r), r;
         if (c._latestUnfiltered === a)
           return c;
         if (typeof e.filter == "function" && !e.filter(
@@ -1050,7 +1053,7 @@ function me(s, n = {}) {
             c.future,
             c.group
           );
-          return e.syncFilter || (l._latestUnfiltered = c._latestUnfiltered), $("filter ignored action, not storing it in past"), x(l), l;
+          return e.syncFilter || (l._latestUnfiltered = c._latestUnfiltered), _("filter ignored action, not storing it in past"), x(l), l;
         }
         const p = e.groupBy(o, a, c);
         if (p != null && p === c.group) {
@@ -1060,9 +1063,9 @@ function me(s, n = {}) {
             c.future,
             c.group
           );
-          return $("groupBy grouped the action with the previous action"), x(l), l;
+          return _("groupBy grouped the action with the previous action"), x(l), l;
         }
-        return c = gt(c, a, e.limit, p), $("inserted new state into history"), x(c), c;
+        return c = gt(c, a, e.limit, p), _("inserted new state into history"), x(c), c;
     }
   };
 }
@@ -1080,7 +1083,7 @@ class mt {
   }
 }
 var I;
-class _t extends mt {
+class $t extends mt {
   constructor() {
     super();
     v(this, "setMiddleware", () => {
@@ -1126,14 +1129,14 @@ class _t extends mt {
 }
 I = new WeakMap();
 var U, N, M;
-class $t extends _t {
+class _t extends $t {
   constructor() {
     super();
     v(this, "setRecord", () => {
       g(this, U).call(this), g(this, N).call(this), g(this, M).call(this);
     });
     m(this, U, () => {
-      this.record || (this.record = Ne(
+      this.record || (this.record = Me(
         T({ start$: (e = {}) => e })
       ));
     });
@@ -1179,9 +1182,9 @@ class $t extends _t {
         const a = this.recordActions.get(c.type);
         return a ? a(u, c) : u;
       };
-      o.stateName = t, this.recordReducers[t] = me(o, {
+      o.stateName = t, this.recordReducers[t] = $e(o, {
         limit: 1e3,
-        filter: be(Array.from(this.recordActions.keys())),
+        filter: ge(Array.from(this.recordActions.keys())),
         undoType: `${t}_undo`,
         redoType: `${t}_redo`
       }), this.record.replaceReducer(T(this.recordReducers)), this.store.currentRecord = this.record.getState(), this.record.dispatch({ type: `${t}_update`, value: {
@@ -1192,20 +1195,20 @@ class $t extends _t {
   }
 }
 U = new WeakMap(), N = new WeakMap(), M = new WeakMap();
-var D, F, B, J, K, H, L, Y, V, z, G, W, q;
-class wt extends $t {
+var D, B, F, K, J, H, L, Y, V, z, G, W, q;
+class wt extends _t {
   constructor() {
     super();
-    v(this, "setStore", () => (g(this, D).call(this), g(this, F).call(this), g(this, B).call(this), g(this, K).call(this), g(this, H).call(this), g(this, L).call(this), g(this, Y).call(this), g(this, V).call(this), g(this, z).call(this), g(this, G).call(this), g(this, W).call(this), g(this, q).call(this), this.store));
+    v(this, "setStore", () => (g(this, D).call(this), g(this, B).call(this), g(this, F).call(this), g(this, J).call(this), g(this, H).call(this), g(this, L).call(this), g(this, Y).call(this), g(this, V).call(this), g(this, z).call(this), g(this, G).call(this), g(this, W).call(this), g(this, q).call(this), this.store));
     m(this, D, () => {
       if (this.store) return;
-      const e = Me;
-      this.store = Ne(
+      const e = De;
+      this.store = Me(
         T({ start$: (t = {}) => t }),
         e(ft(this.setMiddleware()))
       ), this.store.dispatched = [], this.store.current = this.store.getState(), this.store.currentRecord = {}, this.store.parameters = this.parameters;
     });
-    m(this, F, () => {
+    m(this, B, () => {
       let e = this.store;
       e.subscribe(() => {
         var o, u, c, a, p, l, d;
@@ -1274,19 +1277,19 @@ class wt extends $t {
         r.substring(r.length - 7, r.length) === "_update" && t.name !== "initial$" && (this.parameters.get(t.name).inputState = e.current[t.name]), this.observables.has(`${t.name}_after`) && this.observables.get(`${t.name}_after`).next(i);
       });
     });
-    m(this, B, () => {
+    m(this, F, () => {
       this.store.set = (e, t = "value") => {
         switch (t) {
           case "value":
             this.setValueState && this.setValueState(e);
             break;
           case "film":
-            g(this, J).call(this, e.name);
+            g(this, K).call(this, e.name);
             break;
         }
       };
     });
-    m(this, J, (e) => {
+    m(this, K, (e) => {
       if (e.includes("$"))
         throw "State name must not contain '$'. '$' is automatically assigned in state name.";
       if (e === "initial")
@@ -1294,14 +1297,14 @@ class wt extends $t {
       if (e === "history")
         throw "Cannot create 'history$' state, 'history$' is system state.";
       const t = (r = { value: `${e}$ created.`, timestamp: Date.now() }, i) => i.type === `${e}$` ? { value: i.value, timestamp: Date.now() } : r;
-      this.reducers[`${e}$`] = me(t, {
+      this.reducers[`${e}$`] = $e(t, {
         limit: 1e3,
-        filter: be([`${e}$`]),
+        filter: ge([`${e}$`]),
         undoType: `${e}$_undo`,
         redoType: `${e}$_redo`
       }), this.store.replaceReducer(T(this.reducers));
     });
-    m(this, K, () => {
+    m(this, J, () => {
       let e = this.store;
       e.get = (t) => {
         if (!e.current.hasOwnProperty(t))
@@ -1391,7 +1394,7 @@ class wt extends $t {
     m(this, W, () => {
       const e = (r = {}, i) => i.type === "initial$_update" ? (r[i.value.name] = i.value.value, r) : (i.type === "initial$_delete" && delete r[i.value.name], r);
       this.reducers.initial$ = e;
-      const t = me(
+      const t = $e(
         (r = { value: "history$ created.", timestamp: Date.now() }, i) => {
           if (!i.type) return r;
           switch (i.type) {
@@ -1406,7 +1409,7 @@ class wt extends $t {
         },
         {
           limit: 1e3,
-          filter: be(["history$_update"]),
+          filter: ge(["history$_update"]),
           undoType: "history$_undo",
           redoType: "history$_redo"
         }
@@ -1420,7 +1423,7 @@ class wt extends $t {
     });
   }
 }
-D = new WeakMap(), F = new WeakMap(), B = new WeakMap(), J = new WeakMap(), K = new WeakMap(), H = new WeakMap(), L = new WeakMap(), Y = new WeakMap(), V = new WeakMap(), z = new WeakMap(), G = new WeakMap(), W = new WeakMap(), q = new WeakMap();
+D = new WeakMap(), B = new WeakMap(), F = new WeakMap(), K = new WeakMap(), J = new WeakMap(), H = new WeakMap(), L = new WeakMap(), Y = new WeakMap(), V = new WeakMap(), z = new WeakMap(), G = new WeakMap(), W = new WeakMap(), q = new WeakMap();
 var Q, R, X, Z;
 class St extends wt {
   constructor() {
@@ -1462,7 +1465,7 @@ class St extends wt {
           );
         }
     });
-    m(this, R, (e) => typeof e != "function" ? e : new Ie().subscribe(e));
+    m(this, R, (e) => typeof e != "function" ? e : new Ue().subscribe(e));
     m(this, X, (e) => {
       let { inputState: t } = e, r = (i = t, o) => {
         var c, a, p;
@@ -1497,7 +1500,7 @@ class St extends wt {
   }
 }
 Q = new WeakMap(), R = new WeakMap(), X = new WeakMap(), Z = new WeakMap();
-const ce = "font-style: italic; font-weight: 700; color: #D9F8C4;", xt = "font-style: italic; font-weight: 700; color: #ebc078;", Ot = "font-style: italic; font-weight: 700; color: #eb6c63;", Et = "font-style: italic; font-weight: 700; color: #8fdfff;";
+const ue = "font-style: italic; font-weight: 700; color: #D9F8C4;", xt = "font-style: italic; font-weight: 700; color: #ebc078;", Ot = "font-style: italic; font-weight: 700; color: #eb6c63;", Et = "font-style: italic; font-weight: 700; color: #8fdfff;";
 class Tt extends St {
   constructor() {
     super();
@@ -1556,7 +1559,7 @@ class Tt extends St {
             for (let f of l)
               e.action(o, f), i[o] = e.getState()[o].value, c && (b = e.parameters.get(o)) != null && b.actions && ((y = e.parameters.get(o)) == null ? void 0 : y.actions.findIndex(
                 (h) => h.name === f
-              )) !== -1 && (console.groupCollapsed(`%c(STORE) [ ${o} ] is acted.[ ${f} ]`, ce), console.trace(), console.groupEnd());
+              )) !== -1 && (console.groupCollapsed(`%c(STORE) [ ${o} ] is acted.[ ${f} ]`, ue), console.trace(), console.groupEnd());
             return !0;
           }
           if (a)
@@ -1605,7 +1608,7 @@ class Tt extends St {
               for (let h of b)
                 e.action(o, h, u), i[o] = e.getState()[o].value, a && (y = e.parameters.get(o)) != null && y.actions && ((f = e.parameters.get(o)) == null ? void 0 : f.actions.findIndex(
                   (S) => S.name === h
-                )) !== -1 && (console.groupCollapsed(`%c(STORE) [ ${o} ] = ${this.logger(u)}(${typeof u}) is acted.[ ${h} ]`, ce), console.log(u), console.trace(), console.groupEnd());
+                )) !== -1 && (console.groupCollapsed(`%c(STORE) [ ${o} ] = ${this.logger(u)}(${typeof u}) is acted.[ ${h} ]`, ue), console.log(u), console.trace(), console.groupEnd());
               return !0;
             }
             if (p)
@@ -1614,7 +1617,7 @@ class Tt extends St {
           } else {
             if (d)
               return console.warn(`(STORE) Cannot exec actions [ ${JSON.stringify(b)} ]. [ ${o} ] is not initialized. or Cannot use _(underbar or underline) in prop name.`), !0;
-            p ? (u.name = o, u.hasOwnProperty("value") || (u.value = null), e.set(u), u = u.value) : e.set({ name: o, value: u }), a && (console.groupCollapsed(`%c(STORE) [ ${o} ] = ${this.logger(u)}(${typeof u}) is created.`, ce), console.log(u), console.trace(), console.groupEnd());
+            p ? (u.name = o, u.hasOwnProperty("value") || (u.value = null), e.set(u), u = u.value) : e.set({ name: o, value: u }), a && (console.groupCollapsed(`%c(STORE) [ ${o} ] = ${this.logger(u)}(${typeof u}) is created.`, ue), console.log(u), console.trace(), console.groupEnd());
           }
           return i[o] = u, !0;
         },
@@ -1685,7 +1688,7 @@ class Rt extends Tt {
     return super(), this.setRecord(), this.setStore(), this.setReducer(), this.wrapping();
   }
 }
-const jt = pe.getNewRegister(pe), At = ke, Ct = new Rt(), kt = Ie;
+const jt = ye.getNewRegister(ye), At = Ie, Ct = new Rt(), kt = Ue;
 export {
   jt as b$,
   At as bob$,

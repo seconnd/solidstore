@@ -1,8 +1,8 @@
 {
   "name": "solidstore",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
-  "main": "dist/solidstore.es.cjs",
+  "main": "dist/solidstore.cjs.js",
   "module": "dist/solidstore.es.js",
   "browser": "dist/solidstore.umd.js",
   "exports": {

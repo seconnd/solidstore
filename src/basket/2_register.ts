@@ -44,7 +44,7 @@ export class Basket extends AbstractBasket {
 				const commands = prop.split('_')
 				prop = commands.shift() as string
 
-				let isLogging = false, isConfig = false, isDelete = false, isBefore = false, isExecAll = false
+				let isExisting = false, isLogging = false, isConfig = false, isDelete = false, isBefore = false, isExecAll = false
 
 				if (!target.hasOwnProperty(prop)) {
 					console.warn(`(BASKET) Cannot access. [ ${prop} ] is no exists.`)
@@ -54,6 +54,9 @@ export class Basket extends AbstractBasket {
 				for (let command of commands) {
 
 					switch (command) {
+						case 'is':
+							isExisting = true
+							break
 						case 'log':
 							isLogging = true
 							break
@@ -73,6 +76,18 @@ export class Basket extends AbstractBasket {
 							console.warn(`(BASKET) _(underbar or underline) can't use in the name. please use camelcase. or invalid command. [ ${command} ]`)
 							return true
 					}
+				}
+
+				if (isExisting) {
+
+					if (target[prop]) {
+						console.log(`%c(BASKET) [ ${prop} ] is exist.`, loggingStyle)
+						return true
+					} else {
+						console.log(`%c(BASKET) [ ${prop} ] is no exist.`, loggingStyle)
+						return false
+					}
+
 				}
 
 				if (isDelete) {

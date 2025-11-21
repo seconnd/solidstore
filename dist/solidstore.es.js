@@ -516,8 +516,6 @@ v(ye, "getNewRegister", (n = {}) => {
       const i = r.split("_");
       r = i.shift();
       let o = !1, u = !1, c = !1, a = !1, p = !1, l = !1;
-      if (!t.hasOwnProperty(r))
-        return console.warn(`(BASKET) Cannot access. [ ${r} ] is no exists.`), !0;
       for (let f of i)
         switch (f) {
           case "is":
@@ -541,7 +539,7 @@ v(ye, "getNewRegister", (n = {}) => {
           default:
             return console.warn(`(BASKET) _(underbar or underline) can't use in the name. please use camelcase. or invalid command. [ ${f} ]`), !0;
         }
-      return o ? t[r] ? (console.log(`%c(BASKET) [ ${r} ] is exist.`, ne), !0) : (console.log(`%c(BASKET) [ ${r} ] is no exist.`, ne), !1) : a ? ((d = this.configs$.get(r)) != null && d.beforeDelete && this.configs$.get(r).beforeDelete.next(t[r]), delete t[r], this.configs$.delete(r), u && console.log(`%c(BASKET) [ ${r} ] is deleted.`, ot), (b = this.configs$.get(r)) != null && b.afterDelete && this.configs$.get(r).afterDelete.next(null), !0) : (u && (console.groupCollapsed(`%c(BASKET) [ ${r} ] = ${this.logger(t[r])}(${this.typeCheck(t[r])}) is accessed.`, ne), console.log(t[r]), console.trace(), console.groupEnd()), c ? this.configs$.has(r) ? this.configs$.get(r) : null : ((y = this.configs$.get(r)) != null && y.beforeGet && (p || l) && this.configs$.get(r).beforeGet.next(t[r]), t[r]));
+      return o ? t[r] ? (console.log(`%c(BASKET) [ ${r} ] is exist.`, ne), !0) : (console.log(`%c(BASKET) [ ${r} ] is no exist.`, ne), !1) : t.hasOwnProperty(r) ? a ? ((d = this.configs$.get(r)) != null && d.beforeDelete && this.configs$.get(r).beforeDelete.next(t[r]), delete t[r], this.configs$.delete(r), u && console.log(`%c(BASKET) [ ${r} ] is deleted.`, ot), (b = this.configs$.get(r)) != null && b.afterDelete && this.configs$.get(r).afterDelete.next(null), !0) : (u && (console.groupCollapsed(`%c(BASKET) [ ${r} ] = ${this.logger(t[r])}(${this.typeCheck(t[r])}) is accessed.`, ne), console.log(t[r]), console.trace(), console.groupEnd()), c ? this.configs$.has(r) ? this.configs$.get(r) : null : ((y = this.configs$.get(r)) != null && y.beforeGet && (p || l) && this.configs$.get(r).beforeGet.next(t[r]), t[r])) : (console.warn(`(BASKET) Cannot access. [ ${r} ] is no exists.`), null);
     },
     set: function(t, r, i) {
       var b, y;

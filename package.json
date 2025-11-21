@@ -1,6 +1,6 @@
 {
   "name": "solidstore",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "",
   "main": "dist/solidstore.cjs.js",
   "module": "dist/solidstore.es.js",

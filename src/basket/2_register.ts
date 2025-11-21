@@ -46,11 +46,6 @@ export class Basket extends AbstractBasket {
 
 				let isExisting = false, isLogging = false, isConfig = false, isDelete = false, isBefore = false, isExecAll = false
 
-				if (!target.hasOwnProperty(prop)) {
-					console.warn(`(BASKET) Cannot access. [ ${prop} ] is no exists.`)
-					return true
-				}
-
 				for (let command of commands) {
 
 					switch (command) {
@@ -86,6 +81,13 @@ export class Basket extends AbstractBasket {
 					} else {
 						console.log(`%c(BASKET) [ ${prop} ] is no exist.`, loggingStyle)
 						return false
+					}
+
+				} else {
+
+					if (!target.hasOwnProperty(prop)) {
+						console.warn(`(BASKET) Cannot access. [ ${prop} ] is no exists.`)
+						return null
 					}
 
 				}

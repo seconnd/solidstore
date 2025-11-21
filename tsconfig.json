@@ -9,8 +9,10 @@
       "strict": true,
       "sourceMap": true,
       "esModuleInterop": true,
-      "skipLibCheck": true
+      "skipLibCheck": true,
+      "emitDeclarationOnly": true,
+      "declarationDir": "dist/types",
     },
     "include": ["src"],
-    "exclude": ["node_modules", "dist", "**/*.test.ts", "examples"]
+    "exclude": ["node_modules", "dist", "**/*.test.ts"]
   }

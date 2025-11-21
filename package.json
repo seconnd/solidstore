@@ -1,14 +1,26 @@
 {
   "name": "solidstore",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "",
-  "main": "index.js",
+  "main": "dist/solidstore.es.cjs",
+  "module": "dist/solidstore.es.js",
+  "browser": "dist/solidstore.umd.js",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "browser": "./dist/solidstore.umd.js",
+      "import": "./dist/solidstore.es.js",
+      "require": "./dist/solidstore.cjs.js"
+    }
+  },
   "files": [
     "dist"
   ],
   "scripts": {
     "dev": "vite",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:types": "tsc -p tsconfig.json",
+    "build": "vite build && npm run build:types"
   },
   "repository": {
     "type": "git",
